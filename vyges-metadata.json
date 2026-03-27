@@ -1,0 +1,212 @@
+{
+  "$schema": "https://vyges.com/schema/v1/vyges-metadata.schema.json",
+  "x-version": "1.0.0",
+  "name": "picorv32",
+  "version": "0.1.0",
+  "description": "PicoRV32 is a size-optimized RISC-V CPU core implementing the RV32IMC instruction set, configurable for RV32E, RV32I, RV32IC, RV32IM, or RV32IMC cores, with optional interrupt controller and co-processor interface support.",
+  "license": "ISC",
+  "maturity": "production",
+  "target": [
+    "asic",
+    "fpga"
+  ],
+  "design_type": [
+    "digital"
+  ],
+  "created": "2026-03-27T21:42:55Z",
+  "updated": "2026-03-27T21:42:55Z",
+  "source": {
+    "type": "git",
+    "url": "https://github.com/YosysHQ/picorv32",
+    "commit": "87c89acc18994c8cf9a2311e871818e87d304568",
+    "ip_path": ".",
+    "private": false,
+    "containsEncryptedPayload": false,
+    "indexing": true
+  },
+  "maintainers": [
+    {
+      "name": "Vyges",
+      "email": "team@vyges.com",
+      "url": "https://vyges.com",
+      "github": "vyges"
+    }
+  ],
+  "interfaces": [
+    {
+      "type": "bus",
+      "direction": "master",
+      "protocol": "AXI4-Lite",
+      "port": "axi_master",
+      "width": 32,
+      "description": "AXI4-Lite master interface for memory access."
+    },
+    {
+      "type": "bus",
+      "direction": "master",
+      "protocol": "Wishbone",
+      "port": "wb_master",
+      "width": 32,
+      "description": "Wishbone master interface for memory access."
+    },
+    {
+      "type": "clock",
+      "direction": "input",
+      "protocol": "standard",
+      "port": "clk",
+      "width": 1,
+      "description": "Clock input for the CPU core."
+    },
+    {
+      "type": "reset",
+      "direction": "input",
+      "protocol": "standard",
+      "port": "resetn",
+      "width": 1,
+      "description": "Active-low reset input for the CPU core."
+    },
+    {
+      "type": "interrupt",
+      "direction": "input",
+      "protocol": "custom",
+      "port": "irq",
+      "width": 32,
+      "description": "Interrupt request lines for external events."
+    }
+  ],
+  "parameters": [
+    {
+      "name": "ENABLE_MUL",
+      "type": "bit",
+      "default": 1,
+      "description": "Enable hardware multiplier support."
+    },
+    {
+      "name": "ENABLE_DIV",
+      "type": "bit",
+      "default": 1,
+      "description": "Enable hardware divider support."
+    },
+    {
+      "name": "ENABLE_IRQ",
+      "type": "bit",
+      "default": 0,
+      "description": "Enable interrupt controller support."
+    },
+    {
+      "name": "ENABLE_PCPI",
+      "type": "bit",
+      "default": 0,
+      "description": "Enable Pico Co-Processor Interface (PCPI) support."
+    },
+    {
+      "name": "ENABLE_REGS_16_31",
+      "type": "bit",
+      "default": 1,
+      "description": "Enable registers x16 to x31 for RV32I/RV32IMC cores."
+    },
+    {
+      "name": "ENABLE_COUNTERS",
+      "type": "bit",
+      "default": 1,
+      "description": "Enable cycle, time, and instruction counters."
+    },
+    {
+      "name": "TWO_STAGE_SHIFT",
+      "type": "bit",
+      "default": 0,
+      "description": "Enable two-stage barrel shifter for smaller size."
+    }
+  ],
+  "performance": {
+    "frequency": {
+      "min": 250,
+      "max": 450,
+      "unit": "MHz"
+    },
+    "lut_usage": {
+      "min": 750,
+      "max": 2000,
+      "unit": "LUTs"
+    }
+  },
+  "architecture": {
+    "type": "processor",
+    "features": [
+      "RISC-V RV32IMC instruction set",
+      "Configurable RV32E, RV32I, RV32IC, RV32IM, RV32IMC cores",
+      "Optional interrupt controller",
+      "Optional co-processor interface",
+      "AXI4-Lite and Wishbone master interfaces"
+    ]
+  },
+  "asic": {
+    "flavor": "digital",
+    "technology": [
+      "sky130A"
+    ]
+  },
+  "fpga": {
+    "toolchain": [
+      "Vivado"
+    ],
+    "devices": [
+      "Artix-7"
+    ]
+  },
+  "dependencies": [
+    {
+      "name": "RISC-V GCC Toolchain",
+      "type": "library",
+      "description": "Required for compiling software targeting the PicoRV32 core."
+    }
+  ],
+  "test": {
+    "testbenches": [
+      "rtl/dhrystone/testbench.v",
+      "rtl/scripts/csmith/testbench.v",
+      "rtl/scripts/quartus/system_tb.v",
+      "rtl/scripts/vivado/system_tb.v"
+    ],
+    "status": "upstream_passing",
+    "coverage": "functional"
+  },
+  "documentation": {
+    "upstream": "https://github.com/YosysHQ/picorv32"
+  },
+  "artifacts": {
+    "total_rtl_lines": 9133
+  },
+  "categories": {
+    "primary": "processor",
+    "secondary": [
+      "risc-v",
+      "cpu"
+    ],
+    "tags": [
+      "risc-v",
+      "processor",
+      "cpu",
+      "asic",
+      "fpga"
+    ]
+  },
+  "trust": {
+    "verification_level": "silicon_proven",
+    "tapeout_count": 0,
+    "fpga_validated": true,
+    "formal_verified": false,
+    "maintained": true,
+    "last_activity": "2026-03-27"
+  },
+  "meta": {
+    "template": {
+      "generator": "github-models-ai",
+      "template_version": "1.0.0",
+      "generated_at": "2026-03-27T21:42:55Z"
+    },
+    "schema": {
+      "version": "1.0.0"
+    }
+  }
+}
