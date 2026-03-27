@@ -1,0 +1,17 @@
+schema_version: "vyges-upstream-v1"
+upstream:
+  type: "standalone"
+  repo: https://github.com/YosysHQ/picorv32
+  branch: main
+  commit: 87c89acc18994c8cf9a2311e871818e87d304568
+import:
+  rtl:
+    - path: "."
+      map_to: "rtl"
+  license:
+    - path: "LICENSE"
+  readme:
+    - path: "README.md"
+license:
+  spdx: ISC
+  file: LICENSE
