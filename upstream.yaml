@@ -15,3 +15,5 @@ import:
 license:
   spdx: ISC
   file: LICENSE
+
+metadata_locked: true
