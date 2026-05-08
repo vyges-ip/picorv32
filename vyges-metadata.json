@@ -3,6 +3,7 @@
   "x-version": "1.0.0",
   "name": "picorv32",
   "version": "0.1.0",
+  "template": "vyges-ip-template@1.0.0",
   "description": "PicoRV32 is a size-optimized RISC-V CPU core implementing the RV32IMC instruction set, configurable for RV32E, RV32I, RV32IC, RV32IM, or RV32IMC cores, with optional interrupt controller and co-processor interface support.",
   "license": "ISC",
   "maturity": "production",
@@ -14,7 +15,7 @@
     "digital"
   ],
   "created": "2026-03-27T21:42:55Z",
-  "updated": "2026-03-27T21:42:55Z",
+  "updated": "2026-05-08T16:08:45Z",
   "source": {
     "type": "git",
     "url": "https://github.com/YosysHQ/picorv32",
@@ -39,7 +40,114 @@
       "protocol": "AXI4-Lite",
       "port": "axi_master",
       "width": 32,
-      "description": "AXI4-Lite master interface for memory access."
+      "description": "AXI4-Lite master interface for memory access (picorv32_axi variant; not used by Vyges TL-UL wrapper).",
+      "signals": [
+        {
+          "name": "mem_axi_awvalid",
+          "direction": "output",
+          "type": "control",
+          "width": 1,
+          "description": "AXI4-Lite write address valid"
+        },
+        {
+          "name": "mem_axi_awready",
+          "direction": "input",
+          "type": "control",
+          "width": 1,
+          "description": "AXI4-Lite write address ready"
+        },
+        {
+          "name": "mem_axi_awaddr",
+          "direction": "output",
+          "type": "data",
+          "width": 32,
+          "description": "AXI4-Lite write address"
+        },
+        {
+          "name": "mem_axi_wvalid",
+          "direction": "output",
+          "type": "control",
+          "width": 1,
+          "description": "AXI4-Lite write data valid"
+        },
+        {
+          "name": "mem_axi_wready",
+          "direction": "input",
+          "type": "control",
+          "width": 1,
+          "description": "AXI4-Lite write data ready"
+        },
+        {
+          "name": "mem_axi_wdata",
+          "direction": "output",
+          "type": "data",
+          "width": 32,
+          "description": "AXI4-Lite write data"
+        },
+        {
+          "name": "mem_axi_wstrb",
+          "direction": "output",
+          "type": "control",
+          "width": 4,
+          "description": "AXI4-Lite write byte strobes"
+        },
+        {
+          "name": "mem_axi_bvalid",
+          "direction": "input",
+          "type": "control",
+          "width": 1,
+          "description": "AXI4-Lite write response valid"
+        },
+        {
+          "name": "mem_axi_bready",
+          "direction": "output",
+          "type": "control",
+          "width": 1,
+          "description": "AXI4-Lite write response ready"
+        },
+        {
+          "name": "mem_axi_arvalid",
+          "direction": "output",
+          "type": "control",
+          "width": 1,
+          "description": "AXI4-Lite read address valid"
+        },
+        {
+          "name": "mem_axi_arready",
+          "direction": "input",
+          "type": "control",
+          "width": 1,
+          "description": "AXI4-Lite read address ready"
+        },
+        {
+          "name": "mem_axi_araddr",
+          "direction": "output",
+          "type": "data",
+          "width": 32,
+          "description": "AXI4-Lite read address"
+        },
+        {
+          "name": "mem_axi_rvalid",
+          "direction": "input",
+          "type": "control",
+          "width": 1,
+          "description": "AXI4-Lite read data valid"
+        },
+        {
+          "name": "mem_axi_rready",
+          "direction": "output",
+          "type": "control",
+          "width": 1,
+          "description": "AXI4-Lite read data ready"
+        },
+        {
+          "name": "mem_axi_rdata",
+          "direction": "input",
+          "type": "data",
+          "width": 32,
+          "description": "AXI4-Lite read data"
+        }
+      ]
     },
     {
       "type": "bus",
@@ -47,7 +155,65 @@
       "protocol": "Wishbone",
       "port": "wb_master",
       "width": 32,
-      "description": "Wishbone master interface for memory access."
+      "description": "Wishbone master interface (picorv32_wb variant; not used by Vyges TL-UL wrapper).",
+      "signals": [
+        {
+          "name": "wb_cyc_o",
+          "direction": "output",
+          "type": "control",
+          "width": 1,
+          "description": "Wishbone bus cycle"
+        },
+        {
+          "name": "wb_stb_o",
+          "direction": "output",
+          "type": "control",
+          "width": 1,
+          "description": "Wishbone strobe"
+        },
+        {
+          "name": "wb_we_o",
+          "direction": "output",
+          "type": "control",
+          "width": 1,
+          "description": "Wishbone write-enable"
+        },
+        {
+          "name": "wb_adr_o",
+          "direction": "output",
+          "type": "data",
+          "width": 32,
+          "description": "Wishbone address"
+        },
+        {
+          "name": "wb_dat_o",
+          "direction": "output",
+          "type": "data",
+          "width": 32,
+          "description": "Wishbone master-to-slave data"
+        },
+        {
+          "name": "wb_sel_o",
+          "direction": "output",
+          "type": "control",
+          "width": 4,
+          "description": "Wishbone byte-select"
+        },
+        {
+          "name": "wb_ack_i",
+          "direction": "input",
+          "type": "control",
+          "width": 1,
+          "description": "Wishbone slave acknowledge"
+        },
+        {
+          "name": "wb_dat_i",
+          "direction": "input",
+          "type": "data",
+          "width": 32,
+          "description": "Wishbone slave-to-master data"
+        }
+      ]
     },
     {
       "type": "clock",
@@ -55,7 +221,16 @@
       "protocol": "standard",
       "port": "clk",
       "width": 1,
-      "description": "Clock input for the CPU core."
+      "description": "Clock input. Upstream picorv32 names this `clk`; the picorv32_tlul wrapper renames to `clk_i` per Vyges convention.",
+      "signals": [
+        {
+          "name": "clk_i",
+          "direction": "input",
+          "type": "clock",
+          "width": 1,
+          "description": "System clock (single domain \u2014 same clock as all bus + peripheral logic)."
+        }
+      ]
     },
     {
       "type": "reset",
@@ -63,7 +238,17 @@
       "protocol": "standard",
       "port": "resetn",
       "width": 1,
-      "description": "Active-low reset input for the CPU core."
+      "description": "Active-low reset. Upstream picorv32 names this `resetn`; the picorv32_tlul wrapper renames to `rst_ni` per Vyges convention.",
+      "signals": [
+        {
+          "name": "rst_ni",
+          "direction": "input",
+          "type": "reset",
+          "width": 1,
+          "active_level": "low",
+          "description": "Active-low synchronous reset (apply for \u22654 cycles)."
+        }
+      ]
     },
     {
       "type": "interrupt",
@@ -71,49 +256,82 @@
       "protocol": "custom",
       "port": "irq",
       "width": 32,
-      "description": "Interrupt request lines for external events."
+      "description": "PicoRV32 native 32-bit IRQ vector. The Vyges wrapper exposes only one external IRQ port (irq_external_i, wired to irq[31]) and masks the rest via MASKED_IRQ.",
+      "signals": [
+        {
+          "name": "irq_external_i",
+          "direction": "input",
+          "type": "interrupt",
+          "width": 1,
+          "description": "External interrupt input \u2014 wired to picorv32 irq[31] inside the wrapper. Driven by the PLIC's claimed-source line."
+        }
+      ]
+    },
+    {
+      "type": "bus",
+      "direction": "master",
+      "protocol": "TL-UL",
+      "port": "tl",
+      "width": 32,
+      "description": "TL-UL host port exposed by the picorv32_tlul wrapper. Bridges PicoRV32's native simple memory interface via tlul_adapter_host.",
+      "signals": [
+        {
+          "name": "tl_o",
+          "direction": "output",
+          "type": "data",
+          "width": 1,
+          "description": "TL-UL host-to-device struct (tlul_pkg::tl_h2d_t)."
+        },
+        {
+          "name": "tl_i",
+          "direction": "input",
+          "type": "data",
+          "width": 1,
+          "description": "TL-UL device-to-host struct (tlul_pkg::tl_d2h_t)."
+        }
+      ]
     }
   ],
   "parameters": [
     {
       "name": "ENABLE_MUL",
-      "type": "bit",
+      "type": "bool",
       "default": 1,
       "description": "Enable hardware multiplier support."
     },
     {
       "name": "ENABLE_DIV",
-      "type": "bit",
+      "type": "bool",
       "default": 1,
       "description": "Enable hardware divider support."
     },
     {
       "name": "ENABLE_IRQ",
-      "type": "bit",
+      "type": "bool",
       "default": 0,
       "description": "Enable interrupt controller support."
     },
     {
       "name": "ENABLE_PCPI",
-      "type": "bit",
+      "type": "bool",
       "default": 0,
       "description": "Enable Pico Co-Processor Interface (PCPI) support."
     },
     {
       "name": "ENABLE_REGS_16_31",
-      "type": "bit",
+      "type": "bool",
       "default": 1,
       "description": "Enable registers x16 to x31 for RV32I/RV32IMC cores."
     },
     {
       "name": "ENABLE_COUNTERS",
-      "type": "bit",
+      "type": "bool",
       "default": 1,
       "description": "Enable cycle, time, and instruction counters."
     },
     {
       "name": "TWO_STAGE_SHIFT",
-      "type": "bit",
+      "type": "bool",
       "default": 0,
       "description": "Enable two-stage barrel shifter for smaller size."
     }
@@ -159,6 +377,16 @@
       "name": "RISC-V GCC Toolchain",
       "type": "library",
       "description": "Required for compiling software targeting the PicoRV32 core."
+    },
+    {
+      "name": "opentitan-tlul",
+      "type": "rtl",
+      "description": "TL-UL package + tlul_adapter_host (used by picorv32_tlul wrapper to bridge native simple memory interface to TL-UL host)."
+    },
+    {
+      "name": "opentitan-prim",
+      "type": "rtl",
+      "description": "prim_mubi_pkg (MuBi4True/False values used for tlul_adapter_host instr_type_i)."
     }
   ],
   "test": {
