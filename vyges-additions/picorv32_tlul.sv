@@ -68,6 +68,14 @@ module picorv32_tlul #(
     irq_lines[31]    = irq_external_i;   // PLIC claim → external trap
   end
 
+`ifdef PICORV32_BLACKBOX
+  // When PICORV32_BLACKBOX is defined, instantiate the bare picorv32 module
+  // without a parameter list. Use this when this wrapper is synthesized
+  // against a picorv32 blackbox stub that has no parameter declarations.
+  // Default path (else branch) keeps the parameterised instantiation so
+  // PROGADDR_RESET, ENABLE_IRQ, etc. on this wrapper reach the core.
+  picorv32 u_picorv32 (
+`else
   picorv32 #(
     .ENABLE_COUNTERS      (ENABLE_COUNTERS),
     .ENABLE_COUNTERS64    (1'b0),
@@ -96,6 +104,7 @@ module picorv32_tlul #(
     .PROGADDR_IRQ         (PROGADDR_RESET + 32'h10),
     .STACKADDR            (STACKADDR)
   ) u_picorv32 (
+`endif
     .clk           (clk_i),
     .resetn        (rst_ni),
     .trap          (trap_o),
