@@ -1,20 +1,28 @@
 [![.github/workflows/ci.yml](https://github.com/YosysHQ/picorv32/actions/workflows/ci.yml/badge.svg)](https://github.com/YosysHQ/picorv32/actions/workflows/ci.yml)
 
+Development status
+==================
+
+This project is no longer under active development.  Formal verification of the
+core is possible with the [RISC-V Formal Verification
+Framework](https://github.com/YosysHQ/riscv-formal/). Please direct any
+questions to the [official YosysHQ Discourse](https://yosyshq.discourse.group).
+
 PicoRV32 - A Size-Optimized RISC-V CPU
 ======================================
 
-PicoRV32 is a CPU core that implements the [RISC-V RV32IMC Instruction Set](http://riscv.org/).
+PicoRV32 is a CPU core that implements the [RISC-V RV32IMC Instruction Set](https://riscv.org/).
 It can be configured as RV32E, RV32I, RV32IC, RV32IM, or RV32IMC core, and optionally
 contains a built-in interrupt controller.
 
-Tools (gcc, binutils, etc..) can be obtained via the [RISC-V Website](https://riscv.org/software-status/).
-The examples bundled with PicoRV32 expect various RV32 toolchains to be installed in `/opt/riscv32i[m][c]`. See
-the [build instructions below](#building-a-pure-rv32i-toolchain) for details.
+Tools (gcc, binutils, etc..) can be obtained from the RISC-V GNU toolchain
+(see the [build instructions below](#building-a-pure-rv32i-toolchain)).
+The examples bundled with PicoRV32 expect various RV32 toolchains to be installed in `/opt/riscv32i[m][c]`.
 Many Linux distributions now include the tools for RISC-V (for example
 Ubuntu 20.04 has `gcc-riscv64-unknown-elf`). To compile using those set
 `TOOLCHAIN_PREFIX` accordingly (eg. `make TOOLCHAIN_PREFIX=riscv64-unknown-elf-`).
 
-PicoRV32 is free and open hardware licensed under the [ISC license](http://en.wikipedia.org/wiki/ISC_license)
+PicoRV32 is free and open hardware licensed under the [ISC license](https://en.wikipedia.org/wiki/ISC_license)
 (a license that is similar in terms to the MIT license or the 2-clause BSD license).
 
 #### Table of Contents
@@ -126,7 +134,7 @@ All the code in `firmware/` is in the public domain. Simply copy whatever you ca
 
 #### tests/
 
-Simple instruction-level tests from [riscv-tests](https://github.com/riscv/riscv-tests).
+Simple instruction-level tests from [riscv-tests](https://github.com/riscv-software-src/riscv-tests).
 
 #### dhrystone/
 
@@ -619,7 +627,7 @@ TL;DR: Run the following commands to build the complete toolchain:
     make download-tools
     make -j$(nproc) build-tools
 
-The default settings in the [riscv-tools](https://github.com/riscv/riscv-tools) build
+The default settings in the [riscv-gnu-toolchain](https://github.com/riscv-collab/riscv-gnu-toolchain) build
 scripts will build a compiler, assembler and linker that can target any RISC-V ISA,
 but the libraries are built for RV32G and RV64G targets. Follow the instructions
 below to build a complete toolchain (including libraries) that target a pure RV32I
@@ -636,7 +644,7 @@ pure RV32I target, and install it in `/opt/riscv32i`:
     sudo mkdir /opt/riscv32i
     sudo chown $USER /opt/riscv32i
 
-    git clone https://github.com/riscv/riscv-gnu-toolchain riscv-gnu-toolchain-rv32i
+    git clone https://github.com/riscv-collab/riscv-gnu-toolchain riscv-gnu-toolchain-rv32i
     cd riscv-gnu-toolchain-rv32i
     git checkout 411d134
     git submodule update --init --recursive
@@ -646,7 +654,7 @@ pure RV32I target, and install it in `/opt/riscv32i`:
     make -j$(nproc)
 
 The commands will all be named using the prefix `riscv32-unknown-elf-`, which
-makes it easy to install them side-by-side with the regular riscv-tools (those
+makes it easy to install them side-by-side with the regular riscv-gnu-toolchain (those
 are using the name prefix `riscv64-unknown-elf-` by default).
 
 Alternatively you can simply use one of the following make targets from PicoRV32's

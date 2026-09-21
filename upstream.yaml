@@ -3,7 +3,7 @@ upstream:
   type: "standalone"
   repo: https://github.com/YosysHQ/picorv32
   branch: main
-  commit: 87c89acc18994c8cf9a2311e871818e87d304568
+  commit: ef203c2b0a3fb793280f5114941416c425c5b461
 import:
   rtl:
     - path: "."
@@ -15,5 +15,4 @@ import:
 license:
   spdx: ISC
   file: LICENSE
-
 metadata_locked: true
